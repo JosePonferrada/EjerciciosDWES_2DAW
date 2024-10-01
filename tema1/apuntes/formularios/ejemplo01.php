@@ -31,25 +31,38 @@
         <a href="procesa.php?nombre=Pepe&apell=Sanchez">Ir a procesa</a>
         
         <!-- Dará errores debido a la ejecución secuencial -->
+        <!-- Con la función isset() podemos controlar si hemos enviado el formulario
+            y así ejecutar el código solo cuando lo hayamos enviado.
+            Siendo así que la primera vez que cargue el código solo ejecutará el código HTML -->
+        
+        <!-- También podemos poner todo el código al principio con una etiqueta PHP, abrir un else,
+            cerrar la etiqueta, a continuación meter el código HTML y después cerrar el else con
+            otra etiqueta PHP -->
         
         <?php
 
-        echo $_POST['nombre']." ".$_POST['apell'];
+        if (isset($_POST['enviar'])) { // Si se pulsa el formulario: 
 
-        // echo $_GET['nombre']." ".$_GET['apell'];
+            echo "<br>";
+            echo $_POST['nombre']." ".$_POST['apell'];
 
-        // Mostramos el primer elemento marcado del checkbox
+            // echo $_GET['nombre']." ".$_GET['apell'];
 
-        //echo $_POST['modulos'][0];
-        echo "<br>";
+            // Mostramos el primer elemento marcado del checkbox
 
-        // Para recorrer el array del checkbox y mostrarlo
+            //echo $_POST['modulos'][0];
+            echo "<br>";
 
-        foreach ($_POST["modulos"] as $value) {
-            echo "<p>".$value."</p>";
+            // Para recorrer el array del checkbox y mostrarlo
+
+            foreach ($_POST["modulos"] as $value) {
+                echo "<p>".$value."</p>";
+            }
+
+            echo "<br><a href='ejemplo01.php'>Introducir otro</a>";
+            
+            // echo $_REQUEST['nombre']." ".$_REQUEST['apell'];
         }
-
-        // echo $_REQUEST['nombre']." ".$_REQUEST['apell'];
 
         ?>
         
