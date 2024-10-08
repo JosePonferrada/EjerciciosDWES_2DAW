@@ -55,6 +55,11 @@
                     <input type="hidden" name="apell" value="<?php echo $_POST['apell']; ?>">
 
                     <input type="hidden" name="idiomas" value="<?php echo implode("; ",$_POST['idiomas']); ?>">
+                    
+                    <!-- Otra manera de hacerlo con JSON -->
+                    <!-- Si usamos JSON en un value no ponemos comillas dobles, ya que el propio JSON trae
+                        comillas dobles al crearse -->
+                    <input type="hidden" name="idiomas" value=<?php echo json_encode($_POST['idiomas']); ?>>
 
 
                 </form>
@@ -65,12 +70,29 @@
         
             if (isset($_POST['siguiente2'])) {
                 
-                var_dump($_POST);
+                // var_dump($_POST);
                 
                 echo "Nombre: ".$_POST['nombre']."<br>";
                 echo "Apellido: ".$_POST['apell']."<br>";
+                
+//                // Otra manera de mostrarlos
+//                $idio = explode("; ", $_POST['idiomas']);
+//                echo "Idiomas: ";
+//                foreach ($idio as $value) {
+//                    echo $value." ";
+//                }
 
-                echo "Idiomas: ".$_POST['idiomas']."<br>";
+                // Otra manera de mostrarlos con JSON
+                
+                $idio = json_decode($_POST['idiomas']);
+                
+                echo "Idiomas: ";
+                foreach ($idio as $value) {
+                    echo $value." ";
+                }
+                echo "<br>";
+
+                // echo "Idiomas: ".$_POST['idiomas']."<br>";
                 
                 echo "Nº de matricula: ".$_POST['matric']."<br>";
                 echo "Curso: ".$_POST['curso']."<br>";
