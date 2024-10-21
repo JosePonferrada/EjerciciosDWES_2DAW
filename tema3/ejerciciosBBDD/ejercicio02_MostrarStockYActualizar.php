@@ -109,10 +109,21 @@
             }
             
             echo "<input type='submit' name='update' value='Actualizar'>";
-            echo "<input type='hidden' name='producto' value='$_POST[product]'";
+            
+            echo "<input type='hidden' name='producto' value='$_POST[product]'>";
+            
             // Podemos hacerlo mediante 2 arrays o poniendo como índice del array unidades, el código de la tienda
 //            echo "<input type='hidden' name='tienda[]' value='$row->tienda'";
+            
             echo "</form>";
+            
+            ?>
+            
+        </div>
+        
+            <?php
+            
+            }
             
             if (isset($_POST['update'])) {
                 
@@ -120,25 +131,26 @@
                     
                     $stmt = $conex ->prepare("UPDATE stock set unidades = ? where producto = ? and tienda = ?");
                 
-                    $stmt ->bind_param("isi", $_POST[unidades]);
+                    $producto = $_POST['producto']; // Guardamos el código del producto en una variable
+                    
+                    // Recorremos cada iteración
+                    
+                    foreach ($_POST['unidades'] as $tienda => $unidades) {
+                        
+                        $stmt ->bind_param("isi", $unidades, $producto, $tienda);
 
-                    $stmt ->execute();
-
+                        $stmt ->execute();
+                        
+                    }
+                    
+                    echo "Stock actualizado correctamente";
                     
                 } catch (Exception $exc) {
                     
-                    echo $exc->getMessage();
+                    echo "No se pudo actualizar el stock";
                     
                 }
-                            
-            }
-                        
-            ?>
-            
-        </div>
-        
-        <?php
-                
+                   
             }
         
         ?>
