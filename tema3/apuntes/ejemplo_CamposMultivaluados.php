@@ -65,6 +65,41 @@
             $conex -> close();
         }
         
+        // ======================================================================
+        
+        if (isset($_POST['recuperar'])) {
+            
+            try {
+                
+                $conex = new mysqli("localhost", "dwes", "abc123.", "empleados");
+                $conex->set_charset("utf8mb4");
+                
+                $result = $conex->query("SELECT * FROM marketing");
+                
+            } catch (Exception $exc) {
+                die($exc->getMessage());
+            }
+
+            if ($result->num_rows) {
+                
+                while ($fila = $result->fetch_object()) {
+                    
+                    echo "Nombre: ".$fila->Nombre."<br>";
+                    echo "Apellidos: ".$fila->Apellidos."<br>";
+                    echo "Idiomas: ".$fila->idiomas."<br>";
+                    echo "Estudios: ".$fila->estudios."<br>";
+                    echo "<br> ======================== <br>";
+                    
+                }
+                
+            } else {
+                
+                echo "<br> No hay registros en la BBDD";
+                
+            }
+            
+        }
+        
         ?>
         
     </body>
