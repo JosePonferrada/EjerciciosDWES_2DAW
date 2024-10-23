@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>title</title>
+        <title>Ejemplo Campos Multivaluados</title>
     </head>
     <body>
         
@@ -41,7 +41,7 @@
             try {
                 
                 $idioma = 0;
-                $conex = new mysqli("localhost", "dwes", "abc123.", "marketing");
+                $conex = new mysqli("localhost", "dwes", "abc123.", "empleados");
                 $conex->set_charset("utf8mb4");
                 
                 // Recorremos el array antes del insert para insertar lo seleccionado
@@ -54,8 +54,8 @@
                 
                 $arrayEstudios = implode("-", $_POST['estudios']);
                 
-                $conex->query("INSERT INTO empleados values ('$_POST[dni]', '$_POST[nombre]', '$_POST[apell]', "
-                        . "'$_POST[salario]', '$_POST[user]', '$_POST[pass]', $idioma, $arrayEstudios)");
+                $conex->query("INSERT INTO marketing values ('$_POST[dni]', '$_POST[nombre]', '$_POST[apell]', "
+                        . "'$_POST[salario]', '$_POST[user]', '$_POST[pass]', $idioma, '$arrayEstudios')");
                 
             } catch (Exception $exc) {
                 die($exc->getMessage());
