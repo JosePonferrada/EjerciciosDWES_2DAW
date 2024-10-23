@@ -67,7 +67,7 @@
                     
                 }
                 
-                if (preg_match('/^[a-z0-9._+-]+@[a-z0-9._-]+\.(com|org|es)$/i', $_POST['email'])) {
+                if (preg_match('/^[\w\.\+\-]+@[\w\.\-]+\.(com|org|es)$/i', $_POST['email'])) {
                     
                     $email_flag = true;
                     
