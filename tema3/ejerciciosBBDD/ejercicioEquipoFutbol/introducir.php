@@ -32,7 +32,7 @@
             <p>Equipo: <input type="text" name="team"></p>
             <p>Goles: <input type="text" name="goal"></p>
 
-            <a href="index.html"><input type="button" name="inicio" value="Ir a inicio"></a>
+            <a href="index.php"><input type="button" name="inicio" value="Ir a inicio"></a>
             <br><br>
             <input type="submit" name="send" value="Aceptar">
             <br>
@@ -64,22 +64,23 @@
                 if (isset($_POST['pos'])) {
                     $pos_flag = true;
                 } else {
-                    echo "Seleccione alguna posición para el jugador introducido";
+                    echo "Seleccione alguna posición para el jugador introducido<br>";
                 }
                 
-                if (preg_match('/^[a-z]+\s?[a-z]+$/i', $_POST['team'])) {
+                // Este patrón permite varios espacios a diferencia del patrón del nombre que solo permite un espacio
+                if (preg_match('/^([a-z]+\s?)+$/i', $_POST['team'])) { 
                     $team_flag = true;
                 } else {
-                    echo "El nombre del equipo debe tener  letras solamente<br>";
+                    echo "El nombre del equipo debe tener  letras solamente y no puede comenzar con espacios en blanco<br>";
                 }
                 
                 if (preg_match('/^\d{1,3}$/', $_POST['goal'])) {
                     $goal_flag = true;
                 } else {
-                    echo "El nombre debe tener entre 1 y 30 letras solamente<br>";
+                    echo "Solo puedes introducir números en los goles<br>";
                 }
                 
-                if ($dni_flag && $name_flag && $team_flag && $goal_flag) {
+                if ($dni_flag && $name_flag && $team_flag && $goal_flag && $pos_flag) {
                     $general_flag = true;
                 }
                 
@@ -99,14 +100,17 @@
                     } catch (Exception $ex) {
                                                 
                         if ($ex->getCode() == 1062) {
-                            die("Ya existe un registro con ese DNI. Inserte otro distinto.");
+                            die("Ya existe un registro con ese DNI. Inserte otro distinto.<br>");
                         }
                         
                         die("Error al conectar<br>");
                         
                     }
                  
-                    echo "<br>Registro insertado correctamente<br>";
+//                  echo "<br>Registro insertado correctamente<br>";
+                    
+                    // Usamos header() para redirigir al index y mostrar el mensaje allí
+                    header("Location: index.php?mensaje=Registro insertado correctamente");
                     $conex->close();
                 }
                 

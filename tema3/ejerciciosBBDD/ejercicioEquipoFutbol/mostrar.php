@@ -22,8 +22,13 @@
                 while ($fila = $result->fetch_object()) {
                     
                     echo "Nombre: ".$fila->Nombre."<br>";
-                    echo "Apellidos: ".$fila->Apellidos."<br>";
+                    echo "DNI: ".$fila->DNI."<br>";
+                    echo "Dorsal: ".$fila->Dorsal."<br>";
+                    echo "Posición: ".$fila->Posicion."<br>";
+                    echo "Equipo: ".$fila->Equipo."<br>";
+                    echo "Goles: ".$fila->Goles."<br>";
                     
+                    echo "<br>==================================<br>";
                     
                 }
                 
@@ -33,7 +38,7 @@
                 
             }
 
-        echo "<a href='index.html'><input type='button' name='inicio' value='Ir a inicio'></a>";
+        echo "<a href='index.php'><input type='button' name='inicio' value='Ir a inicio'></a>";
         
         ?>
         
