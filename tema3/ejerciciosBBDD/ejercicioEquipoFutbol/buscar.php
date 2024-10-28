@@ -84,21 +84,29 @@
                 if ($stmt->execute()) {
 
                     $result = $stmt->get_result();
+                    
+                    if ($result->num_rows) {
+                        
+                        while ($fila = $result->fetch_object()) {
 
-                    while ($fila = $result->fetch_object()) {
+                            echo "Nombre: ".$fila->Nombre."<br>";
+                            echo "DNI: ".$fila->DNI."<br>";
+                            echo "Dorsal: ".$fila->Dorsal."<br>";
+                            echo "Posición: ".$fila->Posicion."<br>";
+                            echo "Equipo: ".$fila->Equipo."<br>";
+                            echo "Goles: ".$fila->Goles."<br>";
 
-                        echo "Nombre: ".$fila->Nombre."<br>";
-                        echo "DNI: ".$fila->DNI."<br>";
-                        echo "Dorsal: ".$fila->Dorsal."<br>";
-                        echo "Posición: ".$fila->Posicion."<br>";
-                        echo "Equipo: ".$fila->Equipo."<br>";
-                        echo "Goles: ".$fila->Goles."<br>";
+                            echo "<br>==================================<br>";
 
-                        echo "<br>==================================<br>";
-
+                        }  
+                        
+                    } else {
+                        echo "<br>No hay jugadores que cumplan con ese filtro. Inténtelo de nuevo con otro diferente.<br>";
                     }
 
-                }
+                    
+
+                } 
 
 
             } catch (Exception $ex) {
