@@ -91,8 +91,8 @@
                         $conex->set_charset("utf8mb4");
                         
                         // Insertamos los datos tras conectarnos
-                        
-                        $cadenaDePos = implode("-", $_POST['pos']);
+                        // Lo separamos siempre con coma y sin espacios, no ("-")
+                        $cadenaDePos = implode(",", $_POST['pos']); 
                                                 
                         $conex->query("INSERT INTO equipo values ('$_POST[name]', '$_POST[dni]', "
                                 . "'$_POST[dorsal]', '$cadenaDePos', '$_POST[team]', '$_POST[goal]')");
