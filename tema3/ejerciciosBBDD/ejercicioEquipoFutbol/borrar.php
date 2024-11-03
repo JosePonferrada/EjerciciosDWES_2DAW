@@ -11,6 +11,9 @@
             Ingrese DNI del jugador a borrar:
             <input type="text" name="dniToFind"><br><br>
             <input type="submit" name="search" value="Buscar">
+            
+            <a href="index.php"><input type="button" name="inicio" value="Ir a inicio"></a>
+            <br><br>
         </form>
         
         <?php
@@ -36,7 +39,7 @@
                         if ($fila = $result->fetch_object()) {
                             
                             // Form which shows the actual data of the player to be deleted
-                            echo "<h2>Modificar datos del jugador</h2>";
+                            echo "<h2>Borrar jugador</h2>";
                             echo '<form action="" method="post">';
                             echo 'DNI: <input type="text" name="dni" value="'.$fila->DNI.'" readonly><br><br>'; // Must be readonly, if we set it to disabled an error occurs
                             echo 'Nombre: <input type="text" name="nombre" value="'.$fila->Nombre.'" readonly><br><br>';
@@ -44,7 +47,7 @@
                             echo 'Posición: <input type="text" name="posicion" value="'.$fila->Posicion.'" readonly><br><br>';
                             echo 'Equipo: <input type="text" name="equipo" value="'.$fila->Equipo.'" readonly><br><br>';
                             echo 'Goles: <input type="number" name="goles" value="'.$fila->Goles.'" readonly><br><br>';
-                            echo '<input type="submit" name="delete" value="Borrar">\n';
+                            echo '<input type="submit" name="delete" value="Borrar">';
                             echo '<input type="submit" name="cancel" value="Cancelar">';
                             echo '</form>';
                             

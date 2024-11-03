@@ -11,6 +11,9 @@
             Ingrese DNI del jugador a modificar:
             <input type="text" name="dniToFind"><br><br>
             <input type="submit" name="search" value="Buscar">
+            
+            <a href="index.php"><input type="button" name="inicio" value="Ir a inicio"></a>
+            <br><br>
         </form>
         
         <?php

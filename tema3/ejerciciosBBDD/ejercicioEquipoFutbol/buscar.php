@@ -16,6 +16,9 @@
             
             Valor a buscar: <input type="text" name="info"><br><br>
             
+            <a href="index.php"><input type="button" name="inicio" value="Ir a inicio"></a>
+            <br><br>
+            
             <input type="submit" name="search" value="Buscar">
         </form>
         
