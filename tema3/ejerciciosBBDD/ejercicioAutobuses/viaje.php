@@ -19,7 +19,7 @@
             
             <p>Fecha: <input type="date" name="date"></p>
             <p>Matrícula: 
-                <select name="plates">
+                <select name="plate">
                     
                     <?php
                     
@@ -64,9 +64,12 @@
         
         if (isset($_POST['add'])) {
             
-            if (preg_match('/^\d{2}(-)\d{2}(-)\d{4}$/', $_POST['date'])) {
+            if (preg_match('#^\d{4}(-)\d{2}(-)\d{2}$#', $_POST['date'])) { // If we use the input type date we are getting the date with YYYY-MM-DD format
+                                                                            // We can change the delimiters to avoid problems with "/"
                 
-                if (checkdate($array[1], $array[0], $array[2])) {
+                $array = explode("-", $_POST['date']);
+                
+                if (checkdate($array[1], $array[2], $array[0])) {
                         
                     $date_flag = true;
 
@@ -78,7 +81,7 @@
 
             } else {
 
-                echo "El formato debe ser dd-mm-yyyy<br>";
+                echo "El formato debe ser dd/mm/yyyy<br>";
 
             }
          
@@ -111,8 +114,47 @@
                 echo "El destino no puede estar en blanco ni puede incluir un caracter que no sea letras";
             }
             
-            // Now we have to check the seats the bus has and compare it with the availables ones.
-            $conex->query("select * from autos where matricula = $_POST[plates]");            
+            try {
+               
+                // Now we have to check the seats the bus has and compare it with the availables ones.
+                $reg = $conex->query("select * from autos where matricula = '$_POST[plate]'");
+                // Saving the seats of the bus from the object
+                if ($reg->rowCount()) {
+                    $busSeats = ($reg->fetchObject())->Num_plazas;
+                }  
+                
+            } catch (PDOException $ex) {
+                echo "ERROR! ".$ex->errorInfo[1]." => ".$ex->errorInfo[2];
+            }
+            
+            if ($_POST['seats'] > 0 && $_POST['seats'] <= $busSeats) {
+                $seats_flag = true;
+            } else {
+                echo "Las plazas disponibles debe ser un valor mayor que 0 y menor que las plazas que tiene el bus.";
+            }
+            
+            if ($date_flag && $origin_flag && $dest_flag && $seats_flag) {
+                $general_flag = true;
+            }
+            
+            if ($general_flag == true) {
+                
+                try{
+                    
+                    $res = $conex->exec("insert into viajes values ('$_POST[date]', '$_POST[plate]', '$_POST[origin]', '$_POST[dest]', '$_POST[seats]')");
+                    
+                    if ($res) {
+                        echo "Viaje insertado";
+                    } else {
+                        echo "Error en la consulta";
+                    }
+                    
+                } catch (PDOException $ex) {
+                    if ($ex->errorInfo[1] == 1062) die("Ya existe un viaje con esa fecha, matrícula, origen y destino");
+                    else die("ERROR! ".$ex->errorInfo[1]." => ".$ex->errorInfo[2]);
+                }
+                
+            }
             
         }
         
