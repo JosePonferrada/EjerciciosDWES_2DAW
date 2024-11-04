@@ -54,7 +54,7 @@
                     
                     // If $affected_rows === false ==> means there is an error on the query
                     // 0 means no rows affected
-                    // Greater than 0 show how many rows are affected
+                    // Greater than 0 shows how many rows are affected
                     
                     if ($affected_rows) {
                         echo "<br>Bus insertado correctamente<br>";
@@ -63,7 +63,14 @@
                     
                 } catch (PDOException $exc) {
                     $conex->rollBack();
-                    // To add message when primary key is duplicated
+                    // errorInfo[1] => shows the code
+                    // errorInfo[2] => shows the message
+                    // code 23000 => key duplicated
+                    // $exc->getCode() == 23000 equals $exc->errorInfo[1] == 1062
+                    
+                    if ($exc->errorInfo[1] == 1062) {
+                        die("Ya existe un registro con esa matrícula. Inserte otra distinta.");
+                    }
                     die("No se pudo conectar con la BBDD");
                 }
                             
