@@ -38,7 +38,7 @@
                         }
                         
                     } catch (PDOException $exc) {
-                        echo "ERROR! ".$ex->errorInfo[1]." => ".$ex->errorInfo[2];
+                        echo "ERROR: ".$ex->errorInfo[1]." => ".$ex->errorInfo[2];
                     }
                     
                     ?>
@@ -53,6 +53,7 @@
             
             
             <p><input type="submit" name="add" value="Añadir"></p>
+            <a href="index.php"><input type="button" name="inicio" value="Ir a inicio"></a>
             
         </form>
         
@@ -141,7 +142,7 @@
                 
                 try{
                     
-                    $res = $conex->exec("insert into viajes values ('$_POST[date]', '$_POST[plate]', '$_POST[origin]', '$_POST[dest]', '$_POST[seats]')");
+                    $res = $conex->exec("update viajes set values ('$_POST[date]', '$_POST[plate]', '$_POST[origin]', '$_POST[dest]', '$_POST[seats]')");
                     
                     if ($res) {
                         echo "Viaje insertado";
