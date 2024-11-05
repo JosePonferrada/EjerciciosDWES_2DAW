@@ -228,35 +228,6 @@
         
         ?>
         
-        <?php
-        
-        if (isset($_POST['consult']) && $general_flag) {
-            
-            try {
-                
-                $reg = $conex->query("SELECT * FROM viajes WHERE Fecha = '$_POST[date]' AND Origen = '$_POST[origin]' AND Destino = '$_POST[dest]'");
-                
-                if ($reg->rowCount()) {
-                    $consulta = $reg->fetchObject();
-                    
-                    $_POST['date'] = $consulta->Fecha;
-                    $_POST['origin'] = $consulta->Origen;
-                    $_POST['dest'] = $consulta->Destino;
-                    $_POST['freeSeats'] = $consulta->Plazas_libres;
-                    
-                } else {
-                    echo "No hay ningún viaje desde $_POST[origin] hasta $_POST[dest] en la fecha: $_POST[date]";
-                }
-                
-            } catch (PDOException $exc) {
-                die ("ERROR: ".$ex->errorInfo[1]." => ".$ex->errorInfo[2]);
-            }
-                    
-        }
-        
-        ?>
-        
-        
         
         <?php
         
