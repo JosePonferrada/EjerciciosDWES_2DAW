@@ -87,6 +87,10 @@
             
             echo "<h2>Bienvenido de nuevo ".$_COOKIE['name']." ".$_COOKIE['surname'].", tu último acceso fue el ".date("d/m/Y H:i:s", $_COOKIE['lastAccess'])."</h2>";
             
+            // Setting the time of the last access to the next time we show it
+            
+            setcookie("lastAccess", time(), time() + (30 * 24 * 60 * 60));
+            
         } else {
             
             echo "<h2>Es la primera vez que entras, bienvenido ".$_COOKIE['name']." ".$_COOKIE['surname']." </h2>";
