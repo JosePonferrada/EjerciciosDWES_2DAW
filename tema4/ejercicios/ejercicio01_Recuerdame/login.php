@@ -124,13 +124,15 @@
                             if (isset($_POST['remember'])) {
 
                                 setcookie("user", $fila->usuario, time() + (30 * 24 * 60 * 60));
+                                setcookie("pass", $pass, time() + (30 * 24 * 60 * 60));
                                 setcookie("name", $fila->Nombre, time() + (30 * 24 * 60 * 60));
                                 setcookie("surname", $fila->Apellidos, time() + (30 * 24 * 60 * 60));
-
+                                setcookie("remember", 'checked', time() + (30 * 24 * 60 * 60));
 
                             } else {
 
                                 setcookie("user", $fila->usuario, 0);
+                                setcookie("pass", $pass, 0);
                                 setcookie("name", $fila->Nombre, 0);
                                 setcookie("surname", $fila->Apellidos, 0);
 
@@ -169,7 +171,7 @@
             <p>Clave: <input type="text" name="pass" value="<?php echo isset($_COOKIE['pass']) ? $_COOKIE['pass'] : ''; ?>"></p>
             <p><span class="error"><?php echo $pass_error; ?></span></p>
                         
-            <p>Recuérdame <input type="checkbox" name="remember" <?php echo isset($_COOKIE['user']) ? 'checked' : ''; ?>></p>
+            <p>Recuérdame <input type="checkbox" name="remember" <?php echo isset($_COOKIE['remember']) ? 'checked' : ''; ?>></p>
             
             <p>
                 <input type="submit" name="access" value="Acceder">

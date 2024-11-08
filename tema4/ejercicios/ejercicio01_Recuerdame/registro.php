@@ -161,19 +161,28 @@
 
                         $general_message = "Usuario insertado correctamente";
 
-                    }
+                    } 
+//                    elseif ($affected_rows == 0) {
+//                        $general_message = "No se introdujo ningún dato";
+//                        
+//                    } else {
+//                        $general_message = "Hay un error en la query";
+//                    }
 
                 } catch (PDOException $ex) {
-
-                    if ($ex->errorInfo[1] == 1062) {
+                    
+                    if ($ex->getCode() == 23000) {
+                        
+                        // We dont use die() here because we dont want the app to end.
+                        
                         $general_message = "Ya existe un registro con ese DNI. Inserte otro distinto.";
-                        die();
+                        //exit();
                     } elseif ($ex->getCode() == 42000) {
                         $general_message = "Ya existe un registro con ese nombre de usuario. Inserte otro distinto.";
-                        die();
+                        //die();
                     } else {
                         $general_message = "No se pudo conectar con la BBDD";
-                        die();
+                        //die();
                     }
 
                 }

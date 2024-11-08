@@ -99,21 +99,23 @@
         <form action="" method="post">
             
             <input type="submit" name="logout" value="Salir" class="logout-button">
-        
+            
         </form>
 
         <?php
         
-        if (isset($_POST['logout']) && !isset($_POST['remember'])) {
+        if (isset($_POST['logout']) && !isset($_COOKIE['remember'])) {
             
             setcookie("user", "", time() - 3600);
+            setcookie("pass", "", time() - 3600);
             setcookie("name", "", time() - 3600);
             setcookie("surname", "", time() - 3600);
             setcookie("lastAccess", time() - 3600);
             header("Location: login.php");
             exit();
             
-        } else {
+        } else if (isset($_POST['logout']) && isset($_COOKIE['remember'])) {
+            
             header("Location: login.php");
             exit();
             
