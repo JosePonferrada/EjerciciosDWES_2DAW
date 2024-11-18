@@ -19,7 +19,7 @@
             <h1>Bienvenido a nuestra web</h1>
 
             <a href="datos.php">Ver mis datos</a><br><br>
-            <a href="modifica.php">Modificar datos</a>
+            <a href="modificar.php">Modificar datos</a>
 
         </form>
     </body>

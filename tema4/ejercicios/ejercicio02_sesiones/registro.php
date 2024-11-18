@@ -6,6 +6,7 @@
         
         <?php
         
+        $name_error = $surname_error = $location_error = $town_error = $user_error = $pass_error = $general_message = "";
         $name_flag = false; $surname_flag = false; $location_flag = false; $town_flag = false; $user_flag = false; $pass_flag = false;
         
         $general_flag = false;
@@ -26,38 +27,38 @@
             if (preg_match('/^[a-z]+\s?[a-z]+$/i', $name)) {
                 $name_flag = true;
             } else {
-                echo "El nombre debe contener letras solamente<br>";
+                $name_error = "El nombre debe contener letras solamente<br>";
             }
 
             if (preg_match('/^[a-z]+\s?[a-z]+$/i', $surname)) {
                 $surname_flag = true;
             } else {
-                echo "El apellido debe contener letras solamente<br>";
+                $surname_error = "El apellido debe contener letras solamente<br>";
             }
 
             if (!empty($user)) {
                 $user_flag = true;
             } else {
-                echo "El usuario no puede estar vacío";
+                $user_error = "El usuario no puede estar vacío";
             }
             
             if ($pass === $pass2 && !empty($pass) && !empty($pass2)) {
                 $pass_flag = true;
                 $passToInsert = password_hash($pass, PASSWORD_DEFAULT);
             } else {
-                echo "La contraseña no puede estar vacía y debe coincidir con la confirmación de la clave";
+                $pass_error = "La contraseña no puede estar vacía y debe coincidir con la confirmación de la clave";
             }
             
             if (!empty($location)) {
                 $location_flag = true;
             } else {
-                echo "La dirección no puede estar vacía";
+                $location_error = "La dirección no puede estar vacía";
             }
             
             if (!empty($town)) {
                 $town_flag = true;
             } else {
-                echo "La localidad no puede estar vacía";
+                $town_error = "La localidad no puede estar vacía";
             }
             
             if ($name_flag && $surname_flag && $location_flag && $town_flag && $user_flag && $pass_flag) {
@@ -97,11 +98,8 @@
                         
                         // We dont use die() here because we dont want the app to end.
                         
-                        $general_message = "Ya existe un registro con ese DNI. Inserte otro distinto.";
+                        $general_message = "Ya existe un registro con ese usuario. Inserte otro distinto.";
                         //exit();
-                    } elseif ($ex->getCode() == 42000) {
-                        $general_message = "Ya existe un registro con ese nombre de usuario. Inserte otro distinto.";
-                        //die();
                     } else {
                         $general_message = "No se pudo conectar con la BBDD";
                         //die();
@@ -120,12 +118,24 @@
         <form action="" method="post">
             
             <p>Nombre:<input type="text" name="name"></p>
+            <p><span class="error"><?php echo $name_error; ?></span></p>
+            
             <p>Apellidos:<input type="text" name="surname"></p>
+            <p><span class="error"><?php echo $surname_error; ?></span></p>
+            
             <p>Dirección:<input type="text" name="location"></p>
+            <p><span class="error"><?php echo $location_error; ?></span></p>
+            
             <p>Localidad:<input type="text" name="town"></p>
+            <p><span class="error"><?php echo $town_error; ?></span></p>
+            
             <p>Usuario:<input type="text" name="user"></p>
+            <p><span class="error"><?php echo $user_error; ?></span></p>
+            
             <p>Clave:<input type="text" name="pass"></p>
             <p>Repetir clave:<input type="text" name="pass2"></p>
+            <p><span class="error"><?php echo $pass_error; ?></span></p>
+            
             <p>Color de letra:
                 <select id="colorLetra" name="colorLetra">
                     <option value="red">Red</option>
@@ -157,6 +167,8 @@
             
             <a href="index.php"><input type="button" value="Cancelar"></a>
             <input type="submit" name="register" value="Registrar">
+            
+            <p><span class="error"><?php echo $general_message; ?></span></p>
             
         </form>        
         

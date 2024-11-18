@@ -6,6 +6,8 @@
         
         <?php
         
+        $general_error = "";
+        
         if (isset($_POST['login'])) {
             
             $user = $_POST['user'];
@@ -52,6 +54,8 @@
             
             <a href="registro.php"><input type="button" value="Registro"></a>
             <input type="submit" name="login" value="Entrar">
+            
+            <p><span class="error"><?php echo $general_error; ?></span></p>
             
         </form>
         
