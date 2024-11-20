@@ -8,6 +8,14 @@
         
         $general_error = "";
         
+        // Creating the cookie that control the trys
+        if (!isset($_COOKIE['intentos'])) setcookie("intentos", 3);
+        
+        // Blocking the access to index if we are blocked
+        if ($_COOKIE['intentos'] <= 0) {
+            header("Location:intentos.php");
+        }
+        
         if (isset($_POST['login'])) {
             
             $user = $_POST['user'];
@@ -28,14 +36,28 @@
                         // Creating the session and storing the whole object on $_SESSION['user']
                         session_start();
                         $_SESSION['user'] = $fila;
-                        header("Location:inicio.php");
+                        setcookie('intentos', "", time() - 3600); // Deleting the cookie with the trys
+                        header("Location:inicio.php");                        
                     } else {
+                        $error = 1;
                         echo "Login incorrecto";
                     }
                 
                 } else {
+                    $error = 1;
                     echo "Usuario o clave incorrecta";
                 }
+                
+                if ($error == 1) {
+                    $actualTrys = $_COOKIE['intentos'] - 1;
+                    setcookie ("intentos", $actualTrys);
+                    $general_error = "Te quedan ".$actualTrys." intentos";
+                    
+                    if ($actualTrys <= 0) {
+                        header("Location:intentos.php");
+                    }
+                }
+                
             } catch (PDOException $ex) {
                 die("ERROR. No se pudo establecer la conexión con la BBDD");
             }
