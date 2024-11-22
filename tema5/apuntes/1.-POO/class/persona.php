@@ -22,10 +22,30 @@ class Persona {
         self::$counter--;
     }
     
-    public function __clone(): void {
-        self::$counter++;
-        
-    }
+//    public function __clone(): void {
+//        self::$counter++;
+//        
+//    }
+    
+    // We can overload a method by using the magic method:
+    // $method will be the method name and the args will be the params needed to that method
+    public function __call(string $method, array $arguments): void {
+        // If the method is not found in the class
+        if ($method == "modify") {
+            if (count($arguments) == 1) { // If we send just an argument it will mod the name
+                $this->nombre = $arguments[0];
+            }
+            if (count($arguments) == 2) { // If we send just an argument it will mod the name
+                $this->nombre = $arguments[0];
+                $this->apellidos = $arguments[1];
+            }
+            if (count($arguments) == 3) { // If we send just an argument it will mod the name
+                $this->nombre = $arguments[0];
+                $this->apellidos = $arguments[1];
+                $this->edad = $arguments[2];            
+            }
+        }
+    }    
         
     // A method to access the counter
     public static function getCounter() {

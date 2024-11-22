@@ -94,10 +94,38 @@ echo "<br><br>";
 // To duplicate an object we MUST use clone()
 // When cloning an object we can use the magic method __clone and do more things
 $p4 = clone($p);
-$p4->nombre = "Sofía";
+//$p4->nombre = "Sofía";
 echo "Soy p: ".$p;
 echo "<br>";
 echo "Soy p4: ".$p4;
 echo "<br><br>";
+
+// The == operator while comparing an object returns true if both objects have the same attribute values
+// The === operator returns true if compared objects are sharing the same memory spot
+
+if ($p == $p4) {
+    echo "Son iguales<br>";
+} else {
+    echo "Son diferentes<br>";
+}
+
+$p5 = $p4; // Sharing the same memory spot
+
+if ($p5 === $p4) {
+    echo "Son iguales<br>";
+} else {
+    echo "Son diferentes<br>";
+}
+
+echo "<br>================= Overloading methods =================<br><br>";
+
+// That's how we can overload a method
+$p4->modify("Pepe");
+echo $p4."<br>";
+$p4->modify("Ramón", "Hernández");
+echo $p4."<br>";
+$p4->modify("Pepe", "Guzmán", 26);
+echo $p4."<br>";
+
 
 ?>
