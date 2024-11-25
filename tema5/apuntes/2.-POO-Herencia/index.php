@@ -132,6 +132,8 @@ echo "<br>=================  =================<br><br>";
 
 $emp = new Empleado("Paco", "Campos", 50, 1800);
 echo "Soy ".$emp->nombre." y cobro ".$emp->salario;
+echo "<br>";
+echo $emp;
 
 // To access to $emp->nombre we are not using the magic method cause it is public
 // And magic methods are not 

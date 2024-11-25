@@ -22,6 +22,11 @@ class Empleado extends Persona {
         $this->$name = $value;
     }
     
+    // Magic method toString can be also overloaded
+    public function __toString(): string {
+        return parent::__toString().", mi salario es de: ".$this->salario;
+    }
+    
 }
 
 ?>
