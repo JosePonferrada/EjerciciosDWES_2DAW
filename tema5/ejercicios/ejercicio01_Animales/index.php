@@ -79,8 +79,47 @@ echo "<br>";
 
 echo "<br>============Canario==============<br>";
 
+$canario = new Canario("Cani", 2, 3, 13, "pequeño", "pequeñas", "verde");
+
+echo $canario;
+echo "<br>";
+$canario->canta();
+echo "<br>";
+$canario->volar();
+echo "<br>";
+$canario->alimentar();
+echo "<br>";
+$canario->escapar();
+echo "<br>";
+$canario->come();
+echo "<br>";
+
 echo "<br>============Pingüino==============<br>";
 
+$pinguino = new Pinguino("Kowalski", 2, 4, 15, "pequeño", "grandes", "espía");
+
+echo $pinguino;
+echo "<br>";
+$pinguino->deslizarse();
+echo "<br>";
+$pinguino->volar();
+echo "<br>";
+$pinguino->escapar();
+echo "<br>";
+$pinguino->alimentar();
+echo "<br>";
+$pinguino->come();
+echo "<br>";
+
 echo "<br>============Lagarto==============<br>";
+
+$lagarto = new Lagarto("Juancho", 4, 5, 13, "grande");
+
+echo $lagarto;
+echo "<br>";
+$lagarto->cazar();
+echo "<br>";
+$lagarto->come();
+echo "<br>";
 
 ?>
