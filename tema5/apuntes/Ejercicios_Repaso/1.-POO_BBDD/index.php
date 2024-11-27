@@ -4,6 +4,8 @@
     Precio: <input type="text" name="precio"><br>
     
     <input type="submit" name="insertar" value="Insertar"><br>
+    <input type="submit" name="mostrar" value="Mostrar"><br>
+    <input type="submit" name="buscar" value="Buscar"><br>
 </form>
 
 <?php
@@ -26,6 +28,24 @@ if (isset($_POST['insertar'])) {
         echo "Se ha insertado correctamente";
     } else {
         echo "No se pudo insertar el producto";
+    }
+}
+
+if (isset($_POST['mostrar'])) {
+    if ($productos = Producto::recuperarTodos()) {
+        foreach ($productos as $value) {
+            echo $value."<br>";
+        }
+    } else {
+        echo "No hay productos en la BBDD";
+    }
+}
+
+if (isset($_POST['buscar'])) {
+    if ($producto = Producto::buscaProducto($_POST['codigo'])) {
+        echo $producto;
+    } else {
+        echo "No se encuentra un producto con ese código";
     }
 }
 
