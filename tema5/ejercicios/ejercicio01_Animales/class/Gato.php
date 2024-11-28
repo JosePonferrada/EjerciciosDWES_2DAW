@@ -1,6 +1,6 @@
 <?php
 
-require_once './Mamifero.php';
+require_once 'Mamifero.php';
 
 class Gato extends Mamifero {
     private $tamaniobigotes;

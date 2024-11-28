@@ -1,6 +1,6 @@
 <?php
 
-require_once './Ave.php';
+require_once 'Ave.php';
 
 class Canario extends Ave {
     private $color;

@@ -1,13 +1,13 @@
 <?php
 
-require_once './class/Animal.php';
-require_once './class/Mamifero.php';
-require_once './class/Ave.php';
-require_once './class/Gato.php';
-require_once './class/Perro.php';
-require_once './class/Pinguino.php';
-require_once './class/Canario.php';
-require_once './class/Lagarto.php';
+require_once 'class/Animal.php';
+require_once 'class/Mamifero.php';
+require_once 'class/Ave.php';
+require_once 'class/Gato.php';
+require_once 'class/Perro.php';
+require_once 'class/Pinguino.php';
+require_once 'class/Canario.php';
+require_once 'class/Lagarto.php';
 
 $animal = new Animal("Paquito", 4, 3, 16);
 

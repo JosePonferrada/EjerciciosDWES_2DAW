@@ -1,6 +1,6 @@
 <?php
 
-require_once './Ave.php';
+require_once 'Ave.php';
 
 class Pinguino extends Ave {
     private $profesion;

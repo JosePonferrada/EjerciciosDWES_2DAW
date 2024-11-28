@@ -1,6 +1,6 @@
 <?php
 
-require_once './Mamifero.php';
+require_once 'Mamifero.php';
 
 class Perro extends Mamifero {
     private $color;
