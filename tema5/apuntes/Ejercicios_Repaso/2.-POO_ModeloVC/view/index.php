@@ -22,4 +22,22 @@ if (isset($_POST['insertar'])) {
     
 }
 
+if (isset($_POST['mostrar'])) {
+    if ($productos = ProductoController::recuperarTodos()) {
+        foreach ($productos as $value) {
+            echo $value."<br>";
+        }
+    } else {
+        echo "No hay productos en la BBDD";
+    }
+}
+
+if (isset($_POST['buscar'])) {
+    if ($producto = ProductoController::buscaProducto($_POST['codigo'])) {
+        echo $producto;
+    } else {
+        echo "No se encuentra un producto con ese código";
+    }
+}
+
 ?>
