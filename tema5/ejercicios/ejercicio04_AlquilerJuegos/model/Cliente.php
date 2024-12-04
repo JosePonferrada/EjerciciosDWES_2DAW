@@ -21,7 +21,7 @@ class Cliente {
     }
     
     public function __get(string $name): mixed {
-        return $this->name;
+        return $this->$name;
     }
     
     public function __set(string $name, mixed $value): void {

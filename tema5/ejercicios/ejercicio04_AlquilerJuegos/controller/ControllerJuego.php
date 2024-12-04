@@ -12,7 +12,7 @@ class ControllerJuego {
             $result = $conex->query("select * from juegos");
             if ($result->num_rows) {
                 while ($fila = $result->fetch_object()) {
-                    $j = new Juego($fila->Codigo, $fila->Nombre_juego, $fila->Nombre_consola, $fila->Anno, $fila->Precio, $fila->Alguilado, $fila->Imagen, $fila->descripcion);
+                    $j = new Juego($fila->Codigo, $fila->Nombre_juego, $fila->Nombre_consola, $fila->Anno, $fila->Precio, $fila->Alquilado, $fila->Imagen, $fila->descripcion);
                     $juegos[] = $j;
                 }
             } else {
@@ -34,7 +34,7 @@ class ControllerJuego {
             $result = $conex->query("select * from juegos where Nombre_juego = '$nombreJuego'");
             if ($result->num_rows) {
                 while ($fila = $result->fetch_object()) {
-                    $j = new Juego($fila->Codigo, $fila->Nombre_juego, $fila->Nombre_consola, $fila->Anno, $fila->Precio, $fila->Alguilado, $fila->Imagen, $fila->descripcion);
+                    $j = new Juego($fila->Codigo, $fila->Nombre_juego, $fila->Nombre_consola, $fila->Anno, $fila->Precio, $fila->Alquilado, $fila->Imagen, $fila->descripcion);
                     $juegos[] = $j;
                 }
             } else {
@@ -54,7 +54,7 @@ class ControllerJuego {
         
         try {
             $conex = new Conexion();
-            $conex->query("INSERT into juegos VALUES ('$j->Codigo', '$J->Nombre_juego', '$j->Nombre_consola', '$j->Anno', '$j->Precio', '$j->Alguilado', '$j->Imagen', '$j->descripcion')");
+            $conex->query("INSERT into juegos VALUES ('$j->Codigo', '$j->Nombre_juego', '$j->Nombre_consola', '$j->Anno', '$j->Precio', '$j->Alquilado', '$j->Imagen', '$j->descripcion')");
             $filas = $conex->affected_rows ;
             $conex->close();
             return $filas;
