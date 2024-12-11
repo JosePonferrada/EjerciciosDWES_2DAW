@@ -1,45 +1,77 @@
-<form action="" method="post">
-    Email: <input type="email" name="email"><br>
-    Pass: <input type="password" name="pass"><br>
-    Nombre: <input type="text" name="nombre"><br>
-    Salario: <input type="text" name="salario"><br>
-    Departamento: <input type="text" name="dep"><br><br>
-    
-    <input type="submit" name="insertar" value="Insertar">
-    <input type="submit" name="mostrar" value="Mostrar">
-    <input type="submit" name="buscar" value="Buscar">
-</form>
+<?php
+require_once '../controller/conexion.php';
+require_once '../controller/controllerEmpleado.php';
+require_once '../model/empleado.php';
+
+// Propago la sesión si existe la cookie PHPSESSID.
+if (isset($_COOKIE['PHPSESSID'])) session_start();
+
+// Si existe una sesión Logueado, redirigimos a inicio.php
+if (isset($_SESSION['logueado'])) {
+    header("Location:inicio.php");
+    exit();
+}
+
+if (isset($_POST['login'])) {
+    if (!empty($_POST['email']) && !empty($_POST['pwd'])) {
+        // Obtenemos el posible empleado.
+        $emp = ControllerEmpleado::findById($_POST['email']);
+        // Cotejamos la contraseña introducida con la establecida en el registro.
+        if ($emp && verifyPassword($emp) === 0) {
+            // Abrimos sesión.
+            ini_set("session.gc_maxlifetime", 1800);
+            // Establece un tiempo de expiración de 1800 segundos para la cookie de sesión.
+            session_set_cookie_params(1800);
+            session_start();
+            $_SESSION['logueado'] = $emp;
+
+            // Redirigimos a Inicio.
+            header("Location:inicio.php");
+            exit();
+        } else {
+            // Mensaje de error.
+        $msg = "<br><span style='color:red'>USUARIO O CLAVE INCORRECTA!</span>";
+        }
+    } else {
+        // Mensaje de error.
+        $msg = "<br><span style='color:red'>USUARIO O CLAVE INCORRECTA!</span>";
+    }
+}
+?>
+
+<html>
+    <head>
+        <title>Login (MVC - Empleados)</title>
+    </head>
+    <body>
+        <h1>Login</h1>
+        <form action="" method="POST">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email">
+            <label for="pwd">Password:</label>
+            <input type="password" name="pwd" id="pwd">
+            <input type="submit" name="login" value="Iniciar sesión">
+        </form>
+        <!-- Mostramos el mensaje de error -->
+        <?php if (isset($_POST['login']) && isset($msg)) echo $msg; ?>
+    </body>
+</html>
 
 <?php
 
-require_once '../controller/ControllerEmpleado.php';
-require_once '../model/Empleado.php';
-
-if (isset($_POST['insetar'])) {
-    $emp = new Empleado($_POST['email'], $_POST['pass'], $_POST['nombre'], $_POST['salario'], $_POST['dep']);
-    
-    if (ControllerEmpleado::insertar($emp)) {
-        echo "Insertado correctamente";
-    }
-}
-
-if (isset($_POST['mostrar'])) {
-    if ($empleados = ControllerEmpleado::getAll()) {
-        foreach ($empleados as $value) {
-            echo $value."<br>";
-        }
+/**
+ * 
+ * @param type $e
+ * @return bool
+ */
+function verifyPassword($e) {
+    if ($e != null) {
+        $encript = md5($_POST['pwd']);
+        $result = strcasecmp($e->pass, $encript);
     } else {
-        "No hay registros en la BBDD";
+        $result = false;
     }
+    return $result;
 }
-
-if (isset($_POST['buscar'])) {
-    if ($emp = ControllerEmpleado::getEmpleadoByNombre($_POST['nombre'])) {
-        echo $emp;
-    } else {
-        echo "No existe registro con ese nombre";
-    }
-}
-
 
 ?>

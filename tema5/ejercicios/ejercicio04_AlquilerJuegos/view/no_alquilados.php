@@ -3,6 +3,7 @@
 require_once '../model/cliente.php';
 require_once '../model/juego.php';
 require_once '../controller/controllerJuego.php';
+require_once '../controller/controllerAlquiler.php';
 
 // Propago la sesión si existe la cookie PHPSESSID.
 if (isset($_COOKIE['PHPSESSID'])) {
@@ -12,6 +13,8 @@ if (isset($_COOKIE['PHPSESSID'])) {
 // Si existe sesión del Cliente, obtenemos los datos correspondientes.
 if (isset($_SESSION['logueado'])) {
     $autenticado = $_SESSION['logueado'];
+} else {
+    header("Location:inicio.php");
 }
 
 // Si existe sesión Logueado y pulsamos sobre Cerrar sesión.
@@ -28,7 +31,7 @@ if (isset($autenticado) && isset($_POST['logout'])) {
 
 <html>
     <head>
-        <title>Inicio - MVC (alquiler_juegos)</title>
+        <title>No alquilados - MVC (alquiler_juegos)</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
@@ -41,54 +44,32 @@ if (isset($autenticado) && isset($_POST['logout'])) {
                     if (isset($autenticado)) {
                         ?>
                         <label for="form-logout">Hola, <?php echo $autenticado->nombre . " " . $autenticado->apellidos; ?></label>
-                        <form class="d-inline-block ps-3" id="form-logout" action="" method="POST">
+                        <a class="ps-3" href="inicio.php"><button class="btn btn-info">Inicio</button></a>
+                        <form class="d-inline-block" id="form-logout" action="" method="POST">
                             <button type="submit" name="logout" class="btn btn-dark">Cerrar sesión</button>
                         </form>
                         <?php
-                    } else {
-                        ?>
-                        <a href="login.php"><button class="btn btn-info">Iniciar sesión</button></a>
-                        <a href="registro.php"><button class="btn btn-info">Registro</button></a>
-                        <?php
                     }
                     ?>
                 </div>
             </div>
-            <div class="row">
-                <div class="col pb-4">
-                    <?php
-                    // Si existe un cliente logueado, mostramos botón de Cerrar sesión.
-                    if (isset($autenticado)) {
-                        ?>
-                        <a href="inicio.php"><button class="btn btn-primary">Todos</button></a>
-                        <a href="mis_alquilados.php"><button class="btn btn-primary">Mis alquilados</button></a>
-                        <a href="no_alquilados.php"><button class="btn btn-primary">No alquilados</button></a>
-                        <?php
-                    }
-                    ?>
-                </div>
-            </div>
-            <?php
-            if (isset($autenticado) && $autenticado->tipo === "admin") {
-                ?>
-                <div class="row">
-                    <div class="col pb-4">
-                        <a href="nuevo_juego.php"><button class="btn btn-danger">Nuevo juego</button></a>
-                    </div>
-                </div>
-                <?php
-            }
-            ?>
             <div class="row">
                 <div class="col pb-5">
-                    <h1>Juegos</h1>
+                    <h1>No alquilados</h1>
                 </div>
             </div>
             <?php ?>
             <div class="row row-cols-4">
                 <?php
-                // Mostramos las carátulas de todos los juegos.
-                showAllGames(ControllerJuego::getAll());
+                // Mostramos las carátulas de los juegos no alquilados por un cliente.
+                // Si el usuario es admin, verá todos los juegos no alquilados.
+                if (isset($autenticado)) {
+                    if ($autenticado->tipo === "admin") {
+                        showAllGames(ControllerJuego::getJuegosNoAlquilados());
+                    } else {
+                        showAllGames(ControllerJuego::getJuegosNoAlquiladosByCliente($autenticado->dni));
+                    }
+                }
                 ?>
             </div>
         </div>
